@@ -1,17 +1,36 @@
+val REPLACEMENTS = listOf(
+    "one" to "o1e",
+    "two" to "t2o",
+    "three" to "t3e",
+    "four" to "f4r",
+    "five" to "f5e",
+    "six" to "s6x",
+    "seven" to "s7n",
+    "eight" to "e8t",
+    "nine" to "n9e"
+)
+
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
+
+    readInput("Day01").let {
+        part1(it).println()
+        part2(it).println()
     }
 
-    fun part2(input: List<String>): Int {
-        return input.size
+}
+
+
+fun part1(input: List<String>) = input.sumOf { line ->
+    val firstDigit = line.find { it.isDigit() }
+    val lastDigit = line.findLast { it.isDigit() }
+    "$firstDigit$lastDigit".toInt()
+}
+
+fun part2(input: List<String>) = input.sumOf { rawLine ->
+    val line = REPLACEMENTS.fold(rawLine) { previous, replacement ->
+        previous.replace(replacement.first, replacement.second)
     }
-
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
-
-    val input = readInput("Day01")
-    part1(input).println()
-    part2(input).println()
+    val firstDigit = line.find { it.isDigit() }
+    val lastDigit = line.findLast { it.isDigit() }
+    "$firstDigit$lastDigit".toInt()
 }
